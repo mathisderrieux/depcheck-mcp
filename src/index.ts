@@ -41,10 +41,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "depcheck_check",
         description:
-          "Audit an open-source package for vulnerabilities, license issues, " +
-          "maintenance status, and typosquatting risks BEFORE installing it. " +
-          "Returns a verdict (GO / REVIEW / BLOCK) with reasoning. " +
-          "Call this whenever the user asks to install, add, or evaluate a dependency.",
+          "Audit an open-source npm/PyPI/cargo/Go package BEFORE installing or importing it. " +
+          "Returns a structured verdict (GO / REVIEW / BLOCK) with: CVE/GHSA vulnerabilities " +
+          "(via OSV.dev), SPDX license compatibility, maintenance signals (last release, " +
+          "weekly downloads), and typosquatting detection. " +
+          "Provides LIVE data — current CVEs, fresh typosquat detection, recent download " +
+          "counts — that supplements and may correct LLM training knowledge. " +
+          "ALWAYS call this when: (1) the user asks to install/add a dependency, " +
+          "(2) you are about to suggest `npm install`, `pip install`, etc., " +
+          "(3) you are evaluating a package mentioned by the user, " +
+          "(4) you are operating inside a Dynamic Workflow sub-agent handling " +
+          "dependency-related subtasks (migrations, refactors, security audits). " +
+          "Do not rely on training memory for package safety — call this tool first.",
         inputSchema: {
           type: "object",
           properties: {
