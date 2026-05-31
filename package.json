@@ -1,6 +1,6 @@
 {
   "name": "depcheck-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MCP server for DepCheck — dependency auditor for AI coding agents",
   "type": "module",
   "main": "dist/index.js",
